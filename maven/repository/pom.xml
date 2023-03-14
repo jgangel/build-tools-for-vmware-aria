@@ -331,6 +331,19 @@
 							<includeGroupIds>com.vmware.pscoe</includeGroupIds>
 						</configuration>
 					</execution>
+					<execution>
+						<id>copy-full</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<useRepositoryLayout>true</useRepositoryLayout>
+							<addParentPoms>true</addParentPoms>
+							<copyPom>true</copyPom>
+							<outputDirectory>target/dependency-full</outputDirectory>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -352,6 +365,10 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.6</version>
+				<configuration>
+					<outputDirectory>target</outputDirectory>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
 				<executions>
 					<execution>
 						<id>iac-maven-repository</id>
@@ -361,11 +378,22 @@
 						</goals>
 						<configuration>
 							<finalName>iac-maven-repository</finalName>
-							<appendAssemblyId>false</appendAssemblyId>
 							<descriptors>
 								<descriptor>iac-maven-repository.xml</descriptor>
 							</descriptors>
-							<outputDirectory>target</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>iac-maven-repository-full</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<finalName>iac-maven-repository-full</finalName>
+							<descriptors>
+								<descriptor>iac-maven-repository-full.xml</descriptor>
+							</descriptors>
 						</configuration>
 					</execution>
 				</executions>
